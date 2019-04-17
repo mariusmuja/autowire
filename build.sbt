@@ -1,11 +1,14 @@
-crossScalaVersions := Seq("2.11.12", "2.12.4")
+import sbtcrossproject.CrossPlugin.autoImport.crossProject
+import sbtcrossproject.CrossType
 
-val autowire = crossProject.settings(
+crossScalaVersions := Seq("2.11.12", "2.12.8")
+
+val autowire = crossProject(JSPlatform, JVMPlatform).settings(
   organization := "com.lihaoyi",
 
   version := "0.2.7-SNAPSHOT",
   name := "autowire",
-  scalaVersion := "2.12.4",
+  scalaVersion := "2.12.8",
   scalacOptions ++= Seq(
      "-language:higherKinds"
   ),

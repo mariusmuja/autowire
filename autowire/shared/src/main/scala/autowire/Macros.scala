@@ -95,8 +95,6 @@ object Macros {
              """
       }
 
-      //val memSel = c.universe.newTermName(memPath.mkString("."))
-
       val bindings = args.foldLeft[Tree](q"Nil") { (old, next) =>
         q"$next :: $old"
       }
@@ -105,8 +103,6 @@ object Macros {
       val assignment = flattenedArgLists.foldLeft[Tree](q"Nil") { (old, next) =>
         pq"scala.::(${next.name.toTermName}: ${next.typeSignature.asSeenFrom(curCls, cls)} @unchecked, $old)"
       }
-
-
 
       val memSel = memPath.foldLeft(q"($target)") { (cur, nex) =>
         q"$cur.${c.universe.TermName(nex)}"
@@ -120,7 +116,6 @@ object Macros {
                case _ => ???
              }
            """
-
       frag
     }
 
@@ -174,8 +169,6 @@ object Macros {
         case t@q"..${statements: List[ValDef]@unchecked}; $thing.$call(..$args)"
           if statements.forall(_.isInstanceOf[ValDef]) =>
           //Default argument tree
-
-
           val (liveStmts, deadStmts) = statements.tail.partition {
             case ValDef(mod, _, _, Select(singleton, name))
               if name.toString.contains("$default") => false
